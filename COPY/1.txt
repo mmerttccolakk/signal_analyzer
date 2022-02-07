@@ -1,0 +1,36 @@
+#define SAMPLESIZE 500 //signals sample size
+#define recivePin D2 //revice pin
+
+
+//Interrupt
+void IRAM_ATTR timeCalculator() {
+  digitalWrite(LED_BUILTIN, HIGH);
+}
+
+void setup() {
+  Serial.begin(115200);//begin serial
+  //interrupt setup
+  pinMode(recivePin, INPUT_PULLUP);
+  attachInterrupt(digitalPinToInterrupt(recivePin), timeCalculator, CHANGE);
+  pinMode(LED_BUILTIN, OUTPUT);
+  
+  //wait for begin at startup
+  Serial.println("starting..");
+  for (int i = 5; i>0; i--) {
+    Serial.print(i);
+    Serial.print("...");
+      delay(900);
+      digitalWrite(LED_BUILTIN, HIGH);
+      delay(100);
+      digitalWrite(LED_BUILTIN, LOW);
+    }
+    Serial.println();
+
+
+}
+
+void loop() {
+  digitalWrite(LED_BUILTIN, LOW);
+}
+
+
